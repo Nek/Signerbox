@@ -32,12 +32,13 @@
   },
   "homepage": "https://github.com/gaearon/react-hot-boilerplate",
   "devDependencies": {
-    "jsx-loader": "^0.11.0",
-    "react-hot-loader": "^0.4.4",
-    "webpack": "^1.4.0-beta3",
-    "webpack-dev-server": "1.6.4"
+    "jsx-loader": "^0.11.2",
+    "react-hot-loader": "^0.4.5",
+    "webpack": "^1.4.4",
+    "webpack-dev-server": "1.6.5"
   },
   "dependencies": {
-    "react": "^0.11.1"
+    "baconjs": "^0.7.23",
+    "react": "^0.11.2"
   }
 }
