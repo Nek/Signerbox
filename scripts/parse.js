@@ -1,4 +1,8 @@
-module.exports = function(f) {
+var jk = require('jkurwa');
+var keycoder = new jk.Keycoder();
+
+
+module.exports = function(u8) {
 	/*
 	returns "X.509" || "PRIVKEYS" || "IIT"
 	certificate with credentials
@@ -10,9 +14,6 @@ module.exports = function(f) {
 	}
 
 	*/
-	return {
-		format: "X.509", // || "PRIVKEYS" || "IIT"
-		name: "Vasya Pupkin",
-		pub_key: "12FA3E"
-	}
+    u8 = keycoder.maybe_pem(u8)
+    return keycoder.parse(u8);
 }

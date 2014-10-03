@@ -39,6 +39,8 @@
   },
   "dependencies": {
     "baconjs": "^0.7.23",
-    "react": "^0.11.2"
+    "react": "^0.11.2",
+    "jkurwa": ">=0.3.0",
+    "em-gost": ">=0.1.0"
   }
 }
