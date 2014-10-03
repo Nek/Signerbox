@@ -6,7 +6,7 @@ module.exports = function(f) {
 	encoded private keys
 	{
 		format: "PRIVKEYS",
-		keys: [1234, 123213] // 1 or 2 elements
+		keys: [1234, 123213] // 1 or 2 element
 	}
 
 	*/
