@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 
 var port = JSON.parse(process.env.npm_package_config_port || 3000),
-    subdomain = JSON.parse(process.env.npm_package_config_subdomain),
+    subdomain = process.env.npm_package_config_subdomain ? JSON.parse(process.env.npm_package_config_subdomain) : null,
     url = subdomain ?
       'https://' + subdomain + '.localtunnel.me' :
       'http://localhost:' + port;
