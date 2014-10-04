@@ -1,14 +1,7 @@
 var B = require("baconjs");
 var parse = require('../parse');
 
-module.exports = function(fileE) {
-	return fileE.doAction(".preventDefault")
-		.map(".nativeEvent.dataTransfer.files")
-		.map(function(files) {
-			return Array.prototype.slice.call(files, 0);
-		})
-		.flatMap(function(files){
-			return B.mergeAll(files.map(function(file) {
+function readFile(file) {
 				var fileReadE = new B.Bus();
 				var reader = new FileReader();
 				reader.onload = function(e) {
@@ -17,10 +10,38 @@ module.exports = function(fileE) {
 				};
 				reader.readAsArrayBuffer(file);
 				return fileReadE;
-			})).map(parse).reduce([],			
-				function(s,v) {
-					s.push(v);
-					return s;
-				});
-		});
-};
+			}
+
+function toArray(fakeArray) {
+	return Array.prototype.slice.call(fakeArray, 0);
+}
+
+function parallel(action, arr) {
+	return B.mergeAll(arr.map(action));
+}
+
+function readParseCollect(files) {
+				return parallel(readFile, files)
+					.map(parse)
+					.reduce([],			
+						function(s,v) {
+							s.push(v);
+							return s;
+						})
+				}
+
+function parseFiles(fileE) {
+		return fileE
+		.doAction(".preventDefault")
+		.map(".nativeEvent.dataTransfer.files")
+		.map(toArray)
+		.flatMap(readParseCollect);
+	};
+
+var inE = new B.Bus();
+var outE = parseFiles(inE);
+
+module.exports = {
+	files: inE,
+	parsedFiles: outE
+}
