@@ -7,6 +7,7 @@
     "pretest": "webpack ./scripts/index.js ./scripts/bundle.js",
     "test": "tape tests/*.js"
   },
+  "main" : "scripts/index.js",
   "testling": {
     "files": "tests/*.js",
     "browsers": [
