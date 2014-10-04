@@ -2,9 +2,9 @@ var jk = require('jkurwa');
 var keycoder = new jk.Keycoder();
 
 
-module.exports = function(u8) {
+module.exports = function(buffer) {
 	/*
-	returns "X.509" || "PRIVKEYS" || "IIT"
+	returns "x509" || "privkeys" || "IIT" || "PBES2"
 	certificate with credentials
 	non-coded private keys
 	encoded private keys
@@ -14,6 +14,8 @@ module.exports = function(u8) {
 	}
 
 	*/
-    u8 = keycoder.maybe_pem(u8)
-    return keycoder.parse(u8);
+	console.log(buffer);
+	var u8 = new Uint8Array(buffer);
+	var res = keycoder.parse(keycoder.maybe_pem(u8));
+    return res;
 }
