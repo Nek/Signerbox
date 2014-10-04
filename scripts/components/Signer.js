@@ -2,41 +2,49 @@
 'use strict';
 
 var React = require("react/addons");
-var B = require("baconjs");
-var parseFiles = require("../async/parseFiles");
+var filesParser = require("../async/parseFiles");
 
 var Signer = React.createClass({
 	getInitialState: function() {
 		var self = this;
 
-		var fileE = new B.Bus();
-		var resultE = parseFiles(fileE);
-
-		resultE.onValue(function(vvv) {
-			var certs = vvv.filter(function(s) {
-				return s.format === "X.509";
+		filesParser.parsedFiles.onValue(function(data) {
+			console.log(data);
+			data.forEach(function(v) {
+				switch (v.format) {
+					case "x509": 
+						self.setState({cert: v});
+						break;
+					case "privkeys":
+					case "PBES2":
+						self.setState({key: v});
+						break;
+					default:
+						console.log("some bullshit data");
+				}
 			});
-			if (certs.length !== 1) {
-				console.log("bullshit");
-				self.setState({cert: null, key: null});
-			} else {
-				self.setState({cert: certs[0]});
-			}
 		});
 
-		return {cert: null, key: null, parseFile: function(e) { fileE.push(e)} };
+		return {cert: null, key: null, parseFile: function(e){filesParser.files.push(e)}};
 	},
 	onDragOver: function(e) {
 		e.preventDefault();
 	},
 	render: function() {
+
+		var message = <div>Drop key and certificate</div>;
+
+		if (this.state.cert && this.state.key) {
+			message = <div>Key and certificate accepted</div>;
+		} else
 		if (this.state.cert) {
-			return (<div style={{width: 200, height: 200}} onDrop={this.state.parseFile} onDragOver={this.onDragOver}>!!!</div>);
-		} else {
-			return (<div style={{width: 200, height: 200}} onDrop={this.state.parseFile} onDragOver={this.onDragOver}>
-				Drop key and certificate
-			</div>)
+			message = <div>Certificate accepted.<br/>Drop key.</div>;
+		} else 
+		if (this.state.key) {
+			message = <div>Key accepted.<br/>Drop certificate.</div>;
 		}
+
+		return (<div style={{width: 200, height: 200, background: "lightgrey"}} onDrop={this.state.parseFile} onDragOver={this.onDragOver}>{message}</div>)
 	}
 })
 
