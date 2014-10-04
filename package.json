@@ -3,7 +3,22 @@
   "version": "0.1.1",
   "description": "Boilerplate for ReactJS project with hot code reloading",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "pretest": "webpack ./scripts/index.js ./scripts/bundle.js",
+    "test": "tape tests/*.js"
+  },
+  "testling": {
+    "files": "tests/*.js",
+    "browsers": [
+      "safari/latest",
+      "chrome/22..latest",
+      "ie/6..latest",
+      "firefox/16..latest",
+      "opera/11.0..latest",
+      "iphone/6",
+      "ipad/6",
+      "android-browser/latest"
+    ]
   },
   "config": {
     "port": 3000,
@@ -33,7 +48,11 @@
   "homepage": "https://github.com/gaearon/react-hot-boilerplate",
   "devDependencies": {
     "jsx-loader": "^0.11.2",
+    "lodash": "^2.4.1",
+    "phantomjs": "^1.9.10",
     "react-hot-loader": "^0.4.5",
+    "tape": "^3.0.0",
+    "testling": "^1.7.1",
     "webpack": "^1.4.4",
     "webpack-dev-server": "1.6.5"
   },
