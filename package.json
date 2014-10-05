@@ -16,8 +16,8 @@
       "ie/6..latest",
       "firefox/16..latest",
       "opera/11.0..latest",
-      "iphone/6",
-      "ipad/6",
+      "iphone/7",
+      "ipad/7",
       "android-browser/latest"
     ]
   },
